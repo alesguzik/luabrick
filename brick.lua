@@ -2,10 +2,19 @@ require 'object'
 Brick = Object:new{x=0,y=0,w=70,h=20,kind=0}
 
 function Brick:from_cell(row,col,delta,kind)
-   local b = Brick:new{kind=kind}
-   b.x = col * (b.w+delta)
-   b.y = row * (b.h+delta)
-   return b
+   return Brick:new{kind=kind,
+                       x = (col * (b.w+delta)),
+                       y = row * (b.h+delta)}
+end
+
+function Board:initialize()
+   self.body = love.physics.newBody(world,
+                                    self.x,
+                                    self.y,
+                                    "static")
+   self.shape = love.physics.newRectangleShape(self.x,self.y,self.w,self.h)
+   self.fixture = love.physics.newFixture(self.body, self.shape, 1)
+   self.body:setPosition(self.x,self.y)
 end
 
 function Brick:draw()

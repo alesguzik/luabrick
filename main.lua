@@ -13,29 +13,32 @@ function love.load()
    screen_height = real_screen_height - 2 * border
    screen_width  = real_screen_width  - 2 * border
 
+   love.physics.setMeter(64)
+   world = love.physics.newWorld(0,0)
+
    board = Board:new{
-       x = (screen_width-Board.w)/2,
-       y = 0
+       x = screen_width/2-Board.w,
+       y = 230
    }
 
    ball = Ball:new{
-      x = board.x + board.w/2,
-      y = board.h + 20
+      x = board.body:getX() + 2*board.w,
+      y = board.y
    }
    local brick_distance = 8
    bricks = {
-      Brick:from_cell(16, 1, brick_distance, 0),
-      Brick:from_cell(16, 2, brick_distance, 1),
-      Brick:from_cell(16, 3, brick_distance, 2),
-      Brick:from_cell(15, 0, brick_distance, 3),
-      Brick:from_cell(15, 1, brick_distance, 4),
-      Brick:from_cell(15, 2, brick_distance, 5),
-      Brick:from_cell(14, 0, brick_distance, 6),
-      Brick:from_cell(14, 1, brick_distance, 7),
-      Brick:from_cell(14, 2, brick_distance, 8),
-      Brick:from_cell(13, 1, brick_distance, 9),
-      Brick:from_cell(13, 2, brick_distance, 10),
-      Brick:from_cell(13, 3, brick_distance, 11)
+      Brick:from_cell(6, 1, brick_distance, 0),
+      Brick:from_cell(6, 2, brick_distance, 1),
+      Brick:from_cell(6, 3, brick_distance, 2),
+      Brick:from_cell(5, 0, brick_distance, 3),
+      Brick:from_cell(5, 1, brick_distance, 4),
+      Brick:from_cell(5, 2, brick_distance, 5),
+      Brick:from_cell(4, 0, brick_distance, 6),
+      Brick:from_cell(4, 1, brick_distance, 7),
+      Brick:from_cell(4, 2, brick_distance, 8),
+      Brick:from_cell(3, 1, brick_distance, 9),
+      Brick:from_cell(3, 2, brick_distance, 10),
+      Brick:from_cell(3, 3, brick_distance, 11)
    }
 end
 
@@ -49,21 +52,15 @@ function mouse_used()
 end
 
 function love.draw()
-   love.graphics.push()
-   love.graphics.scale(1, -1) -- flip screen around top side
-   -- pull screen up so it fits same position, just upside-down:
-   love.graphics.translate(0, -real_screen_height)
-   love.graphics.translate(border, border)  -- add border
    for _,b in ipairs(bricks) do
       b:draw()
    end
    board:draw()
    ball:draw()
-   love.graphics.pop()
 end
 
-function love.update(delta)
-   local dt = delta * 500
+function love.update(dt)
+   world:update(dt)
    board:update(dt)
    ball:update(dt)
 end
