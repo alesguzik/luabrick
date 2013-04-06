@@ -5,27 +5,20 @@ require "brick"
 
 function love.load()
    love.graphics.setMode(800,500)
-   border = 10
-
-   real_screen_height = love.graphics.getHeight()
-   real_screen_width = love.graphics.getWidth()
-
-   screen_height = real_screen_height - 2 * border
-   screen_width  = real_screen_width  - 2 * border
 
    love.physics.setMeter(64)
    world = love.physics.newWorld(0,0)
 
    board = Board:new{
-       x = screen_width/2-Board.w,
-       y = 230
+       x = love.graphics.getWidth()/2,
+       y = love.graphics.getHeight()-30
    }
 
    ball = Ball:new{
-      x = board.body:getX() + 2*board.w,
-      y = board.y
+      x = board.body:getX() + 50,
+      y = board.body:getY() - 50
    }
-   local brick_distance = 8
+   local brick_distance = 5
    bricks = {
       Brick:from_cell(6, 1, brick_distance, 0),
       Brick:from_cell(6, 2, brick_distance, 1),

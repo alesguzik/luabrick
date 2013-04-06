@@ -13,20 +13,21 @@ function Board:initialize()
                                     self.x,
                                     self.y,
                                     "static")
-   self.shape = love.physics.newRectangleShape(self.x,self.y,self.w,self.h)
+   self.shape = love.physics.newRectangleShape(self.w,self.h)
    self.fixture = love.physics.newFixture(self.body, self.shape, 1)
    self.body:setPosition(self.x,self.y)
 end
 
 function Board:update(dt)
    if mouse_used() then
-      self.x = love.mouse.getX()
+      self.body:setX(love.mouse.getX()-self.w)
    else
+      local x = self.body:getX();
       if love.keyboard.isDown('left') then
-         self.body:applyForce(-400,0)
+         self.body:setX(x-dt*500)
       end
       if love.keyboard.isDown('right') then
-         self.body:applyForce(400,0)
+         self.body:setX(x+dt*500)
       end
    end
 end
