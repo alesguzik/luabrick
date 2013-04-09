@@ -3,8 +3,8 @@ Brick = Object:new{x=0,y=0,w=70,h=20,kind=0}
 
 function Brick:from_cell(row,col,delta,kind)
    return Brick:new{kind = kind,
-                    x = col * (Brick.w+delta),
-                    y = row * (Brick.h+delta)}
+                    x = delta + Brick.w/2 + col * (Brick.w+delta),
+                    y = delta + Brick.h/2 + row * (Brick.h+delta)}
 end
 
 function Brick:initialize()

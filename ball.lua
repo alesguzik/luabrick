@@ -1,5 +1,5 @@
 require 'object'
-Ball = Object:new{r=20,x=0,y=0,speed_x=-1,speed_y=-1}
+Ball = Object:new{r=20,x=0,y=0}
 
 function Ball:initialize()
    self.body = love.physics.newBody(world,
@@ -8,8 +8,9 @@ function Ball:initialize()
                                     "dynamic")
    self.shape = love.physics.newCircleShape(self.r)
    self.fixture = love.physics.newFixture(self.body, self.shape, 1)
-   self.body:applyForce(-400,400)
-   self.fixture:setRestitution(0.9)   -- let the ball bounce
+   local force = 2500
+   self.body:applyForce(-force,force)
+   self.fixture:setRestitution(1)   -- let the ball bounce
 end
 
 function Ball:draw()
@@ -20,5 +21,4 @@ function Ball:draw()
 end
 
 function Ball:update(dt)
-   -- self.body:applyForce(-400,-400)
 end
