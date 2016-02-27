@@ -58,7 +58,7 @@ end
 
 function use_mouse(x)
    love.mouse.setVisible(not x)
-   love.mouse.setGrab(x)
+   love.mouse.setGrabbed(x)
 end
 
 function mouse_used()
