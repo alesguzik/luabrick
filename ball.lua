@@ -8,7 +8,7 @@ function Ball:initialize()
                                     "dynamic")
    self.shape = love.physics.newCircleShape(self.r)
    self.fixture = love.physics.newFixture(self.body, self.shape, 1)
-   local force = 2500
+   local force = 250000
    self.body:applyForce(-force,force)
    self.fixture:setRestitution(1)   -- let the ball bounce
 end
